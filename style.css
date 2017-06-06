@@ -1,0 +1,67 @@
+*{
+	/*supression des marges*/
+	margin:0;
+	padding:0;
+	
+}
+
+body{
+	
+	/*déclaration du background et des deux logos à gauche et à droite de l'écran*/
+	background:url("image/logo.jpg") fixed no-repeat center left,url("image/logo.jpg") fixed no-repeat center right, url("image/fond.jpg");
+	/*taille des logos et du background*/
+	background-size:25% 50%, 25% 50%, 100% 100%;
+	/*texte centrer*/
+	text-align:center;
+	
+}
+
+h1,h2{
+	
+	/*titre souligner*/
+	text-decoration:underline;
+	
+}
+
+article{
+	
+	/*marges spécial pour les articles*/
+	padding:0;
+	margin-left:25%;
+	/*bordure autour des articles*/
+	border:1px solid black;
+	/*taille des articles*/
+	width:50%;
+	
+}
+
+.Regle{
+	
+	/*les règles alignées à gauche*/
+	text-align:left;
+	
+}
+
+footer{
+	
+	/*alignement du footer*/
+	text-align:left;
+	/*taille du footer*/
+	font-size:75%;
+	
+}
+
+#Reponse{
+	
+	/*le texte entré par l'utilisateur est centré*/
+	text-align:center;
+	
+}
+
+.bouton{
+	
+	/*taille des boutons et de leur police*/
+	font-size:100%;
+	width:25%;
+	
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8"/>
+		<title>Bulls and Cows</title>
+		<link rel="stylesheet"type="text/css"href="style.css">	
+		
+	</head>
+	
+	<body>
+		<h1> Bulls and Cows</h1><br/>
+		<section>
+			<aside>
+				<h2>Règles du jeu :</h2><br/>
+			</aside>
+			
+			<article class="Regle">
+				<p>Le but du jeu est de trouver le code choisi aléatoirement par l'ordinateur.</p>
+				<p>Ce code est composé de 4 chiffres différents. Vous avez 6 essais pour trouver ce code, après chaque essais vous sera 
+				indiquer le nombre de bulls et de cows dans votre code.</p>
+				<p>Un bull correspond à un chiffre présent dans le code et se trouvant à la bonne position.</p>
+				<p>Un cow correspond à un chiffre présent dans le code mais ne ce trouvant pas à la bonne position.</p>
+				<p>Vous pouvez utiliser le bouton RAZ à tout moment pour commencer une nouvelle partie.</p>
+			</article>
+		</section>
+		<section>
+			<aside>
+				<br/><h2>Jeu :</h2><br/>
+			</aside>
+			
+			<article>
+				<p>Entrez votre code ici :</p>
+				<input id="Reponse" type="text" size="23"/>
+				<br/><br/>
+				<label id="bulls">Bulls :0</label>
+				<label id="cows">Cows :0</label>
+				<script language="Javascript" type="text/Javascript">
+					/*fonction retournant unchiffre aléatoire*/
+					function aleatoire(min, max) {
+				
+						return (Math.floor((max-min)*Math.random())+min);
+						
+					}
+					
+					/*variable de vie et le mot chercher*/
+					var vieG;
+					var chercher;
+					
+					/*initialisation*/
+					function res(){
+						
+							var i;
+							var j;
+							var k;
+							var l;
+							
+							while (i==j || i==k || i==l || j==k || j==l || k==l){
+								i=aleatoire(0,9);
+								j=aleatoire(0,9);
+								k=aleatoire(0,9);
+								l=aleatoire(0,9);
+							}
+							chercher=""+i+j+k+l;
+							vieG=6;
+						
+						}
+					res();
+					
+					/*fonction de remise à zéro*/
+					function raz(){
+					
+						res();
+						document.getElementById("Bcheck").disabled=false;
+					
+					}
+					
+					/*le jeu*/
+					function verif(){
+						
+						/*récupération de la réponse de l'utilisateur*/
+						var rep=document.getElementById('Reponse');
+						/*cpt sert à parcourir la réponse*/
+						var cpt=0;
+						/*sert à vérfier si la saisi de l'utilisateur est correcte*/
+						var test=true;
+						/*servent à comparer le code de l'utilisateur et le code chercher*/
+						var nb1,nb2=0;
+						/*nombre de bulls et de cows*/
+						var cptCows=0;
+						var cptBulls=0;
+						/*récupération du nombre d'essais restant à l'utilisateur*/
+						var vie=vieG;
+						
+						/*si la réponse ne contient pas 4 caractères alors érreur*/
+						if (rep.value.length!=4){
+						
+							test=false;
+							
+						}else{
+							/*si un caractère n'est pas un chiffre alors érreur*/
+							for(cpt = 1; cpt < 6; cpt++){
+							   if (rep.value.charAt(cpt)!=0 && rep.value.charAt(cpt)!=1 && rep.value.charAt(cpt)!=2 && rep.value.charAt(cpt)!=3 && rep.value.charAt(cpt)!=4 && rep.value.charAt(cpt)!=5 && rep.value.charAt(cpt)!=6 && rep.value.charAt(cpt)!=7 && rep.value.charAt(cpt)!=8 && rep.value.charAt(cpt)!=9){
+							   
+									test=false;
+							   
+							   }
+							}
+							
+							if (test==true){
+								/*si deux chiffres sont identiques alors érreur*/
+								for(cpt=1;cpt<5;cpt++){
+									switch (cpt)
+									{
+									   case 1: if(rep.value.charAt(cpt)==rep.value.charAt(2) || rep.value.charAt(cpt)==rep.value.charAt(3) || rep.value.charAt(cpt)==rep.value.charAt(4)){
+												
+													test=false;
+												
+												}
+									   break;
+									   
+									   case 2: if(rep.value.charAt(cpt)==rep.value.charAt(1) || rep.value.charAt(cpt)==rep.value.charAt(3) || rep.value.charAt(cpt)==rep.value.charAt(4)){
+												
+													test=false;
+												
+												}
+									   break;
+									   
+									   case 3: if(rep.value.charAt(cpt)==rep.value.charAt(2) || rep.value.charAt(cpt)==rep.value.charAt(1) || rep.value.charAt(cpt)==rep.value.charAt(4)){
+												
+													test=false;
+												
+												}
+									   break;
+									   
+									   case 4: if(rep.value.charAt(cpt)==rep.value.charAt(2) || rep.value.charAt(cpt)==rep.value.charAt(3) || rep.value.charAt(cpt)==rep.value.charAt(1)){
+												
+													test=false;
+												
+												}
+									   break;
+									   
+									   default: test=false;
+									}
+								
+								}
+							
+							}
+						
+						}
+						
+						/*si il y a des érreurs alors on informe l'utilisateur*/
+						if (test==false){
+						
+							alert('Votre proposition ne contient pas 4 chiffres différents');
+						
+						}else{
+							/*si le joueur à encore des essais*/
+							if (vie>0){
+								/*si la réponse est correcte alors l'utilisateur gagne et le bouton est désactivé*/
+								if (rep.value==chercher){
+								
+									alert('Victoire !');
+									document.getElementById("Bcheck").disabled=true;
+								
+								}else{
+									/*dcalcul des bulls et des cows*/
+									for (nb1=0;nb1<=3;nb1++){
+										for (nb2=0;nb2<=3;nb2++){
+											
+											if(chercher.charAt(nb1)==rep.value.charAt(nb2)){
+											
+												if(nb1==nb2){
+													
+													cptBulls=cptBulls+1;
+												
+												}else{
+												
+													cptCows=cptCows+1;
+												
+												}
+											
+											}
+										}
+									}
+									/*affichage des bulls et des cows ainsi que mise à jour du nombre d'éssais*/
+									alert('Bulls :'+cptBulls+'\n\nCows :'+cptCows);
+									vieG=vieG-1;
+									alert('il vous reste '+vieG+' essais');
+								
+								}
+							
+							}else{
+								/*si l'utilisateur n'a plus d'éssais alors il perd et le bouton est désactivé*/
+								alert('Défaite !');
+								document.getElementById("Bcheck").disabled=true;
+							
+							}
+							
+						
+						}
+						
+						/*affichage à l'écran des bulls et des cows du dernier essais*/
+						document.getElementById("bulls").innerHTML="Bulls :"+cptBulls;
+						document.getElementById("cows").innerHTML="Cows :"+cptBulls;
+							
+					}
+				
+				</script>
+				<br/><br/>
+				<form>
+					<input type="button" onclick="verif()" value="Check" id="Bcheck" class="bouton">
+				</form>
+				<br/>
+				
+				
+				<form>
+					<input type="button" onclick="raz()" value="RAZ" class="bouton">
+				</form>
+			</article>
+		</section>
+		<br/>
+		<footer>
+			<p>Lamour Anthony étudiant en première année à Ludus academie.</p>
+		</footer>
+	
+	</body>
+	
+</html>
